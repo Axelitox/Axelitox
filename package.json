@@ -1,0 +1,14 @@
+{
+  "name": "humanizer",
+  "version": "1.0.0",
+  "description": "Web app that rewrites AI-generated text to sound more human, using Claude.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0",
+    "express": "^4.21.2"
+  }
+}
