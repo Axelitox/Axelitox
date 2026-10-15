@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Trash2, UserPlus } from 'lucide-react'
 import { useClock, useStore } from '../store/useStore'
-import { Button, Card, Field, Input, Select, SectionTitle, Toggle } from '../components/ui'
+import { Button, Card, Field, Input, Select, SectionTitle, Toggle, useTwoStep } from '../components/ui'
 import { effectiveStatus, STATUS_META, tablesOf } from '../lib/service'
 import { cn, formatDuration, minutesBetween, todayStr } from '../lib/utils'
 import type { Staff } from '../types'
@@ -17,6 +17,7 @@ export function TeamView() {
   const now = useClock((s) => s.now)
   const a = useStore.getState()
   const [form, setForm] = useState<{ name: string; role: Staff['role'] }>({ name: '', role: 'serveur' })
+  const confirmRm = useTwoStep()
   const tableItems = useMemo(() => tablesOf(layout), [layout])
   const today = todayStr(new Date(now))
 
@@ -92,9 +93,9 @@ export function TeamView() {
                   </Select>
                   <button
                     className="flex items-center gap-1 text-xs text-muted hover:text-accent"
-                    onClick={() => confirm(`Retirer ${s.name} de l’équipe ?`) && a.removeStaff(s.id)}
+                    onClick={() => confirmRm.run(s.id, () => a.removeStaff(s.id))}
                   >
-                    <Trash2 size={13} /> Retirer
+                    <Trash2 size={13} /> {confirmRm.armed === s.id ? 'Confirmer le retrait' : 'Retirer'}
                   </button>
                 </div>
               )}

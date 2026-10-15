@@ -1,6 +1,6 @@
 import { Download, RefreshCcw } from 'lucide-react'
 import { useStore } from '../store/useStore'
-import { Button, Card, Field, Input, Segmented, Select, Toggle } from '../components/ui'
+import { Button, Card, Field, Input, Segmented, Select, Toggle, useTwoStep } from '../components/ui'
 
 const Row = ({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) => (
   <div className="flex items-center justify-between gap-6 border-t border-line/60 py-3.5 first:border-0">
@@ -16,6 +16,7 @@ export function SettingsView() {
   const s = useStore((st) => st.settings)
   const update = useStore((st) => st.updateSettings)
   const a = useStore.getState()
+  const confirmReset = useTwoStep()
 
   const exportJson = () => {
     const st = useStore.getState()
@@ -113,8 +114,8 @@ export function SettingsView() {
             </Button>
           </Row>
           <Row title="Réinitialiser la démonstration" desc="Recharge Maison Rouge avec un service du midi en cours. Efface vos modifications.">
-            <Button size="sm" variant="danger" onClick={() => confirm('Réinitialiser toutes les données de démonstration ?') && a.resetDemo()}>
-              <RefreshCcw size={13} /> Réinitialiser
+            <Button size="sm" variant="danger" onClick={() => confirmReset.run('reset', a.resetDemo)}>
+              <RefreshCcw size={13} /> {confirmReset.armed ? 'Confirmer' : 'Réinitialiser'}
             </Button>
           </Row>
         </Card>

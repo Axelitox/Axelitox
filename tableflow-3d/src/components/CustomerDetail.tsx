@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Crown, Lock, Mail, Phone, Trash2, Pencil, CalendarPlus, TriangleAlert } from 'lucide-react'
 import { useClock, useStore } from '../store/useStore'
-import { Button, Field, Input, Modal, SectionTitle, Textarea, Toggle } from './ui'
+import { Button, Field, Input, Modal, SectionTitle, Textarea, Toggle, useTwoStep } from './ui'
 import { formatDateShort, initials, maskEmail, maskPhone, roundQuarter, todayStr } from '../lib/utils'
 import { tableLabel } from '../lib/layout'
 import type { Customer, Reservation } from '../types'
@@ -27,6 +27,7 @@ export function CustomerDetail({ customerId, compact }: { customerId: string; co
   const a = useStore.getState()
   const [editing, setEditing] = useState(false)
   const [form, setForm] = useState<Customer | null>(null)
+  const confirmDel = useTwoStep()
 
   if (!c) return <p className="text-sm text-muted">Fiche introuvable.</p>
   const isManager = role === 'manager'
@@ -195,11 +196,10 @@ export function CustomerDetail({ customerId, compact }: { customerId: string; co
       {isManager && (
         <button
           className="flex items-center gap-1.5 text-xs text-muted hover:text-accent"
-          onClick={() => {
-            if (confirm(`Supprimer définitivement la fiche de ${c.name} ? Les réservations passées resteront anonymisées.`)) a.deleteCustomer(c.id)
-          }}
+          onClick={() => confirmDel.run(c.id, () => a.deleteCustomer(c.id))}
         >
-          <Trash2 size={13} /> Supprimer la fiche (droit à l’effacement)
+          <Trash2 size={13} />
+          {confirmDel.armed === c.id ? `Cliquer à nouveau pour supprimer définitivement la fiche de ${c.name}` : 'Supprimer la fiche (droit à l’effacement)'}
         </button>
       )}
     </div>

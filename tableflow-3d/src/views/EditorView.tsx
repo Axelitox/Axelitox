@@ -3,7 +3,7 @@ import { Copy, Grid3x3, Redo2, RotateCcw, RotateCw, Save, Trash2, Undo2, X, Laye
 import { useStore } from '../store/useStore'
 import { SceneHost } from './Workspace'
 import { CameraControlsBar } from '../components/SceneOverlay'
-import { Button, Field, IconButton, Input, Select, SectionTitle, Toggle } from '../components/ui'
+import { Button, Field, IconButton, Input, Select, SectionTitle, Toggle, useTwoStep } from '../components/ui'
 import { CATALOG, KIND_LABEL, collides, findFreeSpot, makeItem, tableDims, tableLabel } from '../lib/layout'
 import { controlsRef } from '../scene/CameraRig'
 import { cn, uid } from '../lib/utils'
@@ -21,6 +21,7 @@ export function EditorView() {
   const dirty = useStore((s) => s.editor.dirty)
   const a = useStore.getState()
   const [cat, setCat] = useState(CATALOG[0].key)
+  const confirmDiscard = useTwoStep()
   const selected = draft?.find((d) => d.id === selectedId) ?? null
 
   const add = (entryKey: string) => {
@@ -122,8 +123,8 @@ export function EditorView() {
         <span className="hidden text-xs text-muted md:inline">Glisser un objet pour le déplacer · R : pivoter · Suppr : supprimer · flèches : ajuster</span>
         <div className="ml-auto flex items-center gap-2">
           {dirty && <span className="text-xs text-[#A8701F]">Modifications non enregistrées</span>}
-          <Button size="sm" variant="ghost" disabled={!dirty} onClick={() => confirm('Abandonner toutes les modifications non enregistrées ?') && a.editorDiscard()}>
-            <X size={14} /> Abandonner
+          <Button size="sm" variant="ghost" disabled={!dirty} onClick={() => confirmDiscard.run('discard', a.editorDiscard)}>
+            <X size={14} /> {confirmDiscard.armed ? 'Confirmer l’abandon' : 'Abandonner'}
           </Button>
           <Button size="sm" variant="primary" disabled={!dirty} onClick={save}>
             <Save size={14} /> Enregistrer le plan

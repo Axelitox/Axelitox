@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react'
+import { forwardRef, useEffect, useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { cn } from '../lib/utils'
@@ -178,6 +178,25 @@ export const Modal = ({ open, onClose, title, children, wide }: { open: boolean;
       )}
     </AnimatePresence>
   )
+}
+
+/** Confirmation en deux clics (les boîtes de dialogue natives ne sont pas toujours disponibles). */
+export const useTwoStep = (ms = 3500) => {
+  const [armed, setArmed] = useState<string | null>(null)
+  useEffect(() => {
+    if (!armed) return
+    const t = setTimeout(() => setArmed(null), ms)
+    return () => clearTimeout(t)
+  }, [armed, ms])
+  return {
+    armed,
+    run: (key: string, fn: () => void) => {
+      if (armed === key) {
+        setArmed(null)
+        fn()
+      } else setArmed(key)
+    },
+  }
 }
 
 export const Empty = ({ children }: { children: ReactNode }) => (
