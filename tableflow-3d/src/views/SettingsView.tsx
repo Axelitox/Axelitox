@@ -104,6 +104,27 @@ export function SettingsView() {
         </Card>
 
         <Card className="px-5 py-2">
+          <h2 className="pt-3 text-base font-semibold">Vie du restaurant</h2>
+          <Row title="Personnages animés" desc="Serveurs, cuisiniers et clients dans la scène, synchronisés avec le service.">
+            <Toggle label="Personnages animés" checked={s.showCharacters} onChange={(v) => update({ showCharacters: v })} />
+          </Row>
+          <Row title="Densité d’animation" desc="Nombre de serveurs et de cuisiniers animés, rythme des allées et venues.">
+            <Segmented
+              value={s.lifeDensity}
+              onChange={(lifeDensity) => update({ lifeDensity })}
+              options={[
+                { value: 'calm', label: 'Calme' },
+                { value: 'normal', label: 'Normale' },
+                { value: 'lively', label: 'Animée' },
+              ]}
+            />
+          </Row>
+          <p className="pb-3 text-xs text-muted">
+            Avec « Mouvements réduits », les personnages restent immobiles : convives assis, équipe à son poste.
+          </p>
+        </Card>
+
+        <Card className="px-5 py-2">
           <h2 className="pt-3 text-base font-semibold">Données</h2>
           <Row title="Stockage" desc="Les données sont enregistrées dans le stockage local de ce navigateur (aucun serveur). Le code est structuré pour une future migration vers Supabase.">
             <span className="text-xs text-muted">localStorage</span>

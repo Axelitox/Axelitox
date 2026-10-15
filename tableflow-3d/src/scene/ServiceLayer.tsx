@@ -4,6 +4,7 @@ import type { LayoutItem } from '../types'
 import { useClock, useStore } from '../store/useStore'
 import { ItemModel } from './models'
 import { TableObject, type TableView } from './TableObject'
+import { LifeLayer } from './life/LifeLayer'
 import { effectiveStatus, holdingReservation, occupiedMinutes } from '../lib/service'
 
 export const StaticItems = memo(({ items }: { items: LayoutItem[] }) => {
@@ -69,6 +70,7 @@ export function ServiceLayer() {
   return (
     <>
       <StaticItems items={statics} />
+      <LifeLayer />
       {tableItems.map((t) => (
         <TableObject
           key={t.id}

@@ -178,7 +178,7 @@ export function EditorView() {
         <div className="relative min-h-[300px] min-w-0 flex-1 overflow-hidden max-lg:order-1">
           <SceneHost mode="editor" />
           <div className="pointer-events-none absolute inset-x-3 bottom-3 flex justify-end">
-            <CameraControlsBar className="pointer-events-auto" />
+            <CameraControlsBar className="pointer-events-auto" hideLife />
           </div>
           {/* propriétés : panneau flottant (ne redimensionne pas la scène pendant un glisser) */}
           {selected && (

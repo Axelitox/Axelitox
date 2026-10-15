@@ -132,6 +132,8 @@ const freshData = (): Data => {
       quality: 'high',
       serviceOverride: null,
       showBadges: true,
+      showCharacters: true,
+      lifeDensity: 'normal',
     },
   }
 }
@@ -455,6 +457,11 @@ export const useStore = create<Store>()(
       name: 'tableflow3d-v1',
       version: 1,
       storage: createJSONStorage(() => localStorage),
+      // les réglages ajoutés depuis la dernière visite reçoivent leur valeur par défaut
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<Store>
+        return { ...current, ...p, settings: { ...current.settings, ...(p.settings ?? {}) } }
+      },
       partialize: (s) => ({
         layout: s.layout,
         tables: s.tables,

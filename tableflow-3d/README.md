@@ -27,6 +27,30 @@ les données de départ.
 | **Analytics** | Occupation, couverts, durée moyenne, rotations, absences, couverts par heure, occupation par zone — tout est calculé depuis les données de l'app. Aucun chiffre d'affaires n'est affiché (pas de caisse connectée) |
 | **Éditeur de salle** | Mode séparé : ajout depuis un catalogue (tables, chaises, banquettes, murs, cloisons, bar, déco, zones, portes), glisser-déposer 3D par raycasting sur le sol, grille magnétique, rotation, duplication, suppression, dimensions / capacité / numéro, détection des chevauchements, annuler / rétablir, enregistrement explicite du plan |
 
+### Vie du restaurant (personnages animés)
+
+Serveurs, cuisiniers et convives low-poly animés, **pilotés par l'état réel** du prototype :
+
+- **Convives** : une table occupée affiche autant de clients assis que de couverts (dans la limite
+  des places, banquette comprise). Une installation ou une arrivée de réservation les fait entrer
+  par la porte, rejoindre leur table et s'asseoir ; une libération les fait se lever et sortir.
+  Une réservation pas encore arrivée n'affiche personne.
+- **Serveurs** : un par membre de l'équipe en service (pastille à sa couleur). Ils enchaînent des
+  missions simples : accueillir une table, dresser une table réservée, apporter un plat prêt à la
+  passe, débarrasser une table à nettoyer, passer voir leurs tables, aller au bar. Ils servent en
+  priorité les tables qui leur sont affectées. La mission en cours s'affiche dans le panneau de la
+  table, et une étiquette suit le serveur en charge de la table sélectionnée.
+- **Cuisiniers** : ils alternent entre les postes de cuisine et déposent des plats à la passe, que
+  les serveurs viennent chercher.
+- Les trajets sont calculés sur une grille de navigation dérivée du plan (A* + lissage), donc les
+  personnages contournent murs, mobilier et bar, y compris après une modification dans l'éditeur.
+- Réglages → *Vie du restaurant* : activer / masquer les personnages (aussi via le bouton de la
+  barre caméra), densité *Calme / Normale / Animée*. Avec *Mouvements réduits*, tout le monde reste
+  immobile (convives assis, équipe à son poste).
+
+Code : `src/scene/life/` (`nav.ts` grille et A*, `sim.ts` missions et synchronisation,
+`Character.tsx` modèles et poses, `LifeLayer.tsx` intégration).
+
 Le statut « Réservée » est calculé : une table n'apparaît réservée que dans la fenêtre précédant
 la réservation (60 min par défaut, réglable) et jusqu'à la fin de son créneau.
 

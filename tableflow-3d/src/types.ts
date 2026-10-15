@@ -136,6 +136,9 @@ export interface Settings {
   quality: 'high' | 'balanced'
   serviceOverride: 'midi' | 'soir' | null
   showBadges: boolean
+  /** couche de vie : personnages animés */
+  showCharacters: boolean
+  lifeDensity: 'calm' | 'normal' | 'lively'
 }
 
 export type View = 'overview' | 'plan' | 'reservations' | 'customers' | 'team' | 'analytics' | 'editor' | 'settings'

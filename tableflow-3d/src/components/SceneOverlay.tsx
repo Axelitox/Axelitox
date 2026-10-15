@@ -1,4 +1,4 @@
-import { Box, LocateFixed, Minus, Plus, Square, Tag } from 'lucide-react'
+import { Box, LocateFixed, Minus, Plus, Square, Tag, PersonStanding } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { useLiveStats } from '../lib/hooks'
 import { STATUS_META, STATUS_ORDER } from '../lib/service'
@@ -6,11 +6,12 @@ import { controlsRef } from '../scene/CameraRig'
 import { cn } from '../lib/utils'
 import { IconButton } from './ui'
 
-export function CameraControlsBar({ className }: { className?: string }) {
+export function CameraControlsBar({ className, hideLife }: { className?: string; hideLife?: boolean }) {
   const camera = useStore((s) => s.camera)
   const showBadges = useStore((s) => s.settings.showBadges)
   const update = useStore((s) => s.updateSettings)
   const reduced = useStore((s) => s.settings.reducedMotion)
+  const showCharacters = useStore((s) => s.settings.showCharacters)
   const zoom = (f: number) => {
     const c = controlsRef.current
     if (c) c.zoomTo(c.camera.zoom * f, !reduced)
@@ -37,6 +38,15 @@ export function CameraControlsBar({ className }: { className?: string }) {
       <IconButton label={showBadges ? 'Masquer les étiquettes' : 'Afficher les étiquettes'} active={showBadges} onClick={() => update({ showBadges: !showBadges })}>
         <Tag size={15} />
       </IconButton>
+      {!hideLife && (
+        <IconButton
+          label={showCharacters ? 'Masquer les personnages' : 'Afficher les personnages'}
+          active={showCharacters}
+          onClick={() => update({ showCharacters: !showCharacters })}
+        >
+          <PersonStanding size={16} />
+        </IconButton>
+      )}
     </div>
   )
 }

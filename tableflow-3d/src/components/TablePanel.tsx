@@ -17,6 +17,7 @@ import {
   Ban,
 } from 'lucide-react'
 import { useClock, useStore } from '../store/useStore'
+import { useLife } from '../store/useLife'
 import { effectiveStatus, holdingReservation, nextReservation, occupiedMinutes, STATUS_META, STATUS_ORDER } from '../lib/service'
 import { tableLabel, zoneAt } from '../lib/layout'
 import { cn, formatDuration, roundQuarter, toHHMM, todayStr, toTs } from '../lib/utils'
@@ -248,6 +249,7 @@ export function TablePanel({ tableId, onClose }: { tableId: string; onClose: () 
                 </button>
               ))}
           </div>
+          <LiveActivity tableId={tableId} waiterId={svc?.waiterId ?? null} />
         </section>
 
         {/* Client */}
@@ -337,5 +339,30 @@ export function TablePanel({ tableId, onClose }: { tableId: string; onClose: () 
         )}
       </div>
     </motion.aside>
+  )
+}
+
+/** Activité en direct des serveurs animés liée à cette table (couche de vie). */
+function LiveActivity({ tableId, waiterId }: { tableId: string; waiterId: string | null }) {
+  const missions = useLife((s) => s.missions)
+  const staff = useStore((s) => s.staff)
+  const enabled = useStore((s) => s.settings.showCharacters)
+  if (!enabled) return null
+  const lines = staff
+    .filter((s) => s.active && missions[s.id] && (s.id === waiterId || missions[s.id]?.tableId === tableId))
+    .map((s) => ({ s, m: missions[s.id]!, here: missions[s.id]?.tableId === tableId }))
+  if (!lines.length) return null
+  return (
+    <ul className="mt-2 space-y-1">
+      {lines.map(({ s, m, here }) => (
+        <li key={s.id} className="flex items-center gap-2 text-xs text-muted">
+          <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', here && 'animate-pulse')} style={{ background: s.color }} />
+          <span>
+            <span className="font-medium text-ink">{s.name}</span> · {m.text}
+            {here && ' (cette table)'}
+          </span>
+        </li>
+      ))}
+    </ul>
   )
 }
