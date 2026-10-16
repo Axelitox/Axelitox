@@ -56,7 +56,7 @@ export default function InscriptionsPage() {
           <Button href={site.links.registration} size="lg">
             Accéder à l&apos;inscription en ligne
           </Button>
-          <Button href={site.links.memberArea} variant="outline-light" size="lg">
+          <Button href={site.links.memberArea} variant="outline-dark" size="lg">
             Espace adhérent
           </Button>
         </div>
@@ -76,11 +76,11 @@ export default function InscriptionsPage() {
           <ol className="md:col-span-7 md:col-start-6">
             {steps.map((s, i) => (
               <Reveal as="li" key={s.title} className="relative grid grid-cols-[56px_1fr] gap-5 border-t border-ink/10 py-8 md:grid-cols-[80px_1fr]">
-                <span className="font-display text-4xl font-bold leading-none tracking-tight md:text-5xl">
+                <span className="font-display text-4xl font-semibold leading-none tracking-tight md:text-5xl">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="font-display text-xl font-bold">{s.title}</h3>
+                  <h3 className="font-display text-xl font-semibold">{s.title}</h3>
                   <p className="mt-2 leading-relaxed text-muted-strong">{s.text}</p>
                   {s.tip && (
                     <p className="mt-4 border-l-2 border-signal bg-white px-4 py-3 text-sm">

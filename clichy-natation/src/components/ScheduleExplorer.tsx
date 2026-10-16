@@ -71,8 +71,8 @@ export function ScheduleExplorer({ initialActivity = "", compact = false }: { in
             aria-pressed={f.day === d.value}
             onClick={() => set("day", f.day === d.value ? "" : d.value)}
             className={cx(
-              "h-9 shrink-0 rounded-xs border px-3 text-xs font-medium transition-colors",
-              f.day === d.value ? "border-ink bg-ink text-white" : "border-ink/15 bg-white hover:border-ink",
+              "h-9 shrink-0 rounded-full px-4 text-[14px] transition-colors",
+              f.day === d.value ? "bg-ink text-white" : "bg-paper hover:bg-mist",
             )}
           >
             {d.label.slice(0, 3)}.
@@ -105,15 +105,15 @@ export function ScheduleExplorer({ initialActivity = "", compact = false }: { in
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="grid gap-3 py-6 md:grid-cols-[180px_1fr] md:gap-8"
+                className="grid gap-3 py-6 md:grid-cols-[160px_1fr] md:gap-8"
                 aria-label={day}
               >
-                <h3 className="font-display text-xl font-bold uppercase tracking-tight md:pt-4">{day}</h3>
+                <h3 className="text-[21px] font-semibold tracking-[-0.01em] md:pt-3">{day}</h3>
                 <ul className="grid gap-2">
                   {slots.map((s) => (
                     <li
                       key={s.id}
-                      className="group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-2 border border-ink/10 bg-white p-4 transition-colors hover:border-ink md:grid-cols-[130px_1.2fr_1fr_1fr_auto]"
+                      className="group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-2 rounded-[14px] bg-paper p-4 transition-colors hover:bg-mist md:grid-cols-[130px_1.2fr_1fr_1fr_auto]"
                     >
                       <p className="flex items-center gap-2 font-display text-base font-medium tabular-nums">
                         <Clock aria-hidden className="size-4 text-ink/40 group-hover:text-ink" />
@@ -156,13 +156,13 @@ function Select({
 }) {
   return (
     <label className="block">
-      <span className="eyebrow mb-2 block text-[0.65rem] text-muted-strong">{label}</span>
+      <span className="mb-1.5 block text-[12px] font-semibold text-muted-strong">{label}</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cx(
-          "h-12 w-full appearance-none rounded-xs border bg-white bg-[length:12px] bg-[right_14px_center] bg-no-repeat pl-3 pr-9 text-sm transition-colors focus:border-ink",
-          value ? "border-ink" : "border-ink/15",
+          "h-12 w-full appearance-none rounded-[12px] border bg-white bg-[length:12px] bg-[right_14px_center] bg-no-repeat pl-3 pr-9 text-sm transition-colors focus:border-ink",
+          value ? "border-ink" : "border-[#d2d2d7]",
         )}
         style={{
           backgroundImage:

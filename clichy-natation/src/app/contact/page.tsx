@@ -24,7 +24,7 @@ export default function ContactPage() {
           <div className="space-y-10 md:col-span-4">
             <div>
               <Eyebrow>Email</Eyebrow>
-              <a href={`mailto:${site.email}`} className="mt-4 block break-words font-display text-2xl font-bold hover:underline">
+              <a href={`mailto:${site.email}`} className="mt-4 block break-words font-display text-2xl font-semibold hover:underline">
                 {site.email}
               </a>
             </div>

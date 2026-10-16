@@ -68,7 +68,7 @@ export default function ClubPage() {
             {values.map((v, i) => (
               <Reveal as="li" key={v.k} delay={i * 0.06} className="bg-white p-8 md:p-10">
                 <span className="font-display text-xs text-muted-strong">0{i + 1}</span>
-                <h2 className="mt-10 font-display text-3xl font-bold uppercase tracking-tight">
+                <h2 className="mt-10 font-display text-3xl font-semibold tracking-tight">
                   {v.k}
                   <span className="text-signal">.</span>
                 </h2>
@@ -118,7 +118,7 @@ export default function ClubPage() {
               ["Contact", site.email],
             ].map(([k, v]) => (
               <div key={k} className="bg-paper p-6">
-                <dt className="eyebrow text-[0.65rem] text-muted-strong">{k}</dt>
+                <dt className="eyebrow text-[12px] text-muted-strong">{k}</dt>
                 <dd className="mt-2 break-words font-medium">{v}</dd>
               </div>
             ))}

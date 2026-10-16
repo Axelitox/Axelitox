@@ -25,15 +25,20 @@ export default function PlanningPage() {
         title={["Votre natation.", <span key="r">Votre rythme<span className="text-signal">.</span></span>]}
         intro={<p>Trouvez en quelques secondes un créneau adapté à votre âge et à votre niveau, puis inscrivez-vous en ligne.</p>}
         crumbs={[{ label: "Planning & Tarifs", href: "/planning-tarifs" }]}
+        links={[
+          { label: "Planning", href: "#planning" },
+          { label: "Tarifs", href: "#tarifs" },
+          { label: "Infos pratiques", href: "#pratique" },
+        ]}
       >
-        <nav aria-label="Sur cette page" className="flex flex-wrap gap-3">
-          <Button href="#planning" variant="outline-light" icon="right">
+        <nav aria-label="Accès rapide" className="flex flex-wrap gap-3">
+          <Button href="#planning" variant="outline-dark" icon="right">
             Planning
           </Button>
-          <Button href="#tarifs" variant="outline-light" icon="right">
+          <Button href="#tarifs" variant="outline-dark" icon="right">
             Tarifs
           </Button>
-          <Button href="#pratique" variant="outline-light" icon="right">
+          <Button href="#pratique" variant="outline-dark" icon="right">
             Infos pratiques
           </Button>
         </nav>
@@ -78,7 +83,7 @@ export default function PlanningPage() {
               return (
                 <Reveal key={a.slug} className="grid gap-6 py-8 md:grid-cols-12">
                   <div className="md:col-span-4">
-                    <Link href={`/activites/${a.slug}`} className="font-display text-2xl font-bold uppercase tracking-tight hover:underline">
+                    <Link href={`/activites/${a.slug}`} className="font-display text-2xl font-semibold tracking-tight hover:underline">
                       {a.name}
                     </Link>
                     <p className="mt-1 text-sm text-muted-strong">{a.audience}</p>
@@ -91,7 +96,7 @@ export default function PlanningPage() {
                           <p className="mt-1 text-sm text-muted-strong">{p.detail}</p>
                           <StatusBadge status={p.status} className="mt-2" />
                         </div>
-                        <p className="shrink-0 font-display text-3xl font-bold tabular-nums">
+                        <p className="shrink-0 font-display text-3xl font-semibold tabular-nums">
                           {formatPrice(p.amount)}
                           {p.amount !== null && <span className="ml-1 text-sm font-normal text-muted-strong">/ {p.unit}</span>}
                         </p>

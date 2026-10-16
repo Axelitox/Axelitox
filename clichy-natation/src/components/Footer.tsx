@@ -1,96 +1,115 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { footerNav, legalNav, site } from "@/lib/site";
-import { Logo } from "./Logo";
+import { ChevronRight } from "lucide-react";
+import { activities } from "@/data/activities";
+import { legalNav, site } from "@/lib/site";
+
+const columns = [
+  {
+    title: "Activités",
+    items: activities.map((a) => ({ label: a.name, href: `/activites/${a.slug}` })),
+  },
+  {
+    title: "Nager au club",
+    items: [
+      { label: "Planning & tarifs", href: "/planning-tarifs" },
+      { label: "Inscriptions", href: "/inscriptions" },
+      { label: "Espace adhérent", href: site.links.memberArea },
+      { label: "Boutique", href: "/boutique" },
+    ],
+  },
+  {
+    title: "Le club",
+    items: [
+      { label: "À propos", href: "/le-club" },
+      { label: "La piscine", href: "/piscine" },
+      { label: "Compétition", href: "/competition" },
+      { label: "Actualités", href: "/actualites" },
+    ],
+  },
+  {
+    title: "Contact",
+    items: [
+      { label: "Nous écrire", href: "/contact" },
+      { label: "Itinéraire", href: site.mapsUrl },
+      ...site.social.map((s) => ({ label: s.label, href: s.href })),
+    ],
+  },
+];
+
+const external = (href: string) => /^https?:\/\//.test(href);
 
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer data-header="dark" className="overflow-hidden bg-ink text-white">
-      <div className="container-x pt-20 md:pt-28">
-        <div className="grid gap-14 md:grid-cols-12">
-          <div className="md:col-span-4">
-            <Logo tone="light" />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/60">
-              Club de natation et d&apos;activités aquatiques à Clichy. Apprendre, progresser, performer — ensemble.
-            </p>
-            <ul className="mt-8 flex gap-5">
-              {site.social.map((s) => (
-                <li key={s.href}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-white/70 transition-colors hover:text-signal"
-                  >
-                    {s.label}
-                    <span className="sr-only"> (nouvel onglet)</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+    <footer className="bg-paper text-[12px] leading-[1.33] text-muted-strong">
+      <div className="container-x py-5">
+        <div className="space-y-2 border-b border-ink/15 pb-4">
+          <p>
+            Les tarifs et horaires marqués « À actualiser » proviennent d&apos;une saison précédente et seront confirmés par le
+            club pour 2026/2027. Les tarifs annuels s&apos;entendent pour un cours hebdomadaire sur les périodes scolaires, hors
+            vacances de la zone C.
+          </p>
+          <p>
+            Les photographies de nageurs mineurs ne sont publiées qu&apos;avec l&apos;autorisation de leurs représentants légaux.
+          </p>
+        </div>
 
-          {footerNav.map((col) => (
-            <nav key={col.title} aria-label={col.title} className="md:col-span-2">
-              <p className="eyebrow text-white/40">{col.title}</p>
-              <ul className="mt-5 space-y-3">
+        <nav aria-label="Fil d'Ariane" className="flex items-center gap-1 border-b border-ink/15 py-3 text-ink/80">
+          <Link href="/" className="font-semibold text-ink">
+            CS Clichy 92
+          </Link>
+          <ChevronRight aria-hidden className="size-3" />
+          <span>Natation</span>
+        </nav>
+
+        <div className="grid grid-cols-1 gap-x-6 py-5 sm:grid-cols-2 md:grid-cols-4">
+          {columns.map((col) => (
+            <nav key={col.title} aria-label={col.title} className="border-b border-ink/10 py-3 sm:border-0 sm:py-0 sm:pb-6">
+              <p className="mb-2 font-semibold text-ink">{col.title}</p>
+              <ul className="space-y-2">
                 {col.items.map((i) => (
-                  <li key={i.href}>
-                    <Link href={i.href} className="text-sm text-white/80 transition-colors hover:text-signal">
-                      {i.label}
-                    </Link>
+                  <li key={i.label}>
+                    {external(i.href) ? (
+                      <a href={i.href} target="_blank" rel="noopener noreferrer" className="hover:text-ink hover:underline">
+                        {i.label}
+                      </a>
+                    ) : (
+                      <Link href={i.href} className="hover:text-ink hover:underline">
+                        {i.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
             </nav>
           ))}
-
-          <div className="md:col-span-4">
-            <p className="eyebrow text-white/40">Nous trouver</p>
-            <address className="mt-5 space-y-1 text-sm not-italic leading-relaxed text-white/80">
-              <span className="block">{site.address.venue}</span>
-              <span className="block">{site.address.street}</span>
-              <span className="block">
-                {site.address.postalCode} {site.address.city}
-              </span>
-            </address>
-            <a href={`mailto:${site.email}`} className="mt-5 block text-sm text-white hover:text-signal">
-              {site.email}
-            </a>
-            <a
-              href={site.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-signal"
-            >
-              Itinéraire <ArrowUpRight aria-hidden className="size-3.5" />
-              <span className="sr-only"> (nouvel onglet)</span>
-            </a>
-          </div>
         </div>
 
-        <div className="mt-20 flex flex-col gap-4 border-t border-white/10 py-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
+        <p className="pb-3">
+          D&apos;autres questions ? Écrivez-nous à{" "}
+          <a href={`mailto:${site.email}`} className="text-ink underline">
+            {site.email}
+          </a>{" "}
+          ou passez à la {site.address.venue}, {site.address.street}, {site.address.postalCode} {site.address.city}.
+        </p>
+
+        <div className="flex flex-col gap-2 border-t border-ink/15 py-4 md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {site.legalName} · Association loi 1901 · SIREN {site.siren}
+            Copyright © {year} {site.legalName}. Association loi 1901 — SIREN {site.siren}.
           </p>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {legalNav.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="hover:text-white">
+          <ul className="flex flex-wrap items-center">
+            {legalNav.map((l, i) => (
+              <li key={l.href} className="flex items-center">
+                {i > 0 && <span aria-hidden className="mx-2 h-3 w-px bg-ink/20" />}
+                <Link href={l.href} className="text-ink/80 hover:underline">
                   {l.label}
                 </Link>
               </li>
             ))}
           </ul>
+          <p className="text-ink/80">France</p>
         </div>
       </div>
-      <p
-        aria-hidden
-        className="select-none whitespace-nowrap pb-2 text-center font-display text-[7.4vw] font-bold uppercase leading-[0.8] tracking-[-0.06em] text-white/[0.06]"
-      >
-        CS Clichy 92 Natation
-      </p>
     </footer>
   );
 }

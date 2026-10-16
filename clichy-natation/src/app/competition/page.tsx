@@ -50,7 +50,7 @@ export default function CompetitionPage() {
               {levels.map((l, i) => (
                 <li key={l.k} className="py-6">
                   <p className="font-display text-xs text-muted-strong">0{i + 1}</p>
-                  <p className="mt-2 font-display text-2xl font-bold uppercase tracking-tight">{l.k}</p>
+                  <p className="mt-2 font-display text-2xl font-semibold tracking-tight">{l.k}</p>
                   <p className="mt-1 text-sm text-muted-strong">{l.t}</p>
                 </li>
               ))}

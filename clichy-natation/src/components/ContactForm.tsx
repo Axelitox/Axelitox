@@ -34,7 +34,7 @@ export function ContactForm() {
     return (
       <div role="status" className="border border-ink/10 bg-white p-8">
         <Check aria-hidden className="size-8" />
-        <p className="mt-4 font-display text-2xl font-bold">Message envoyé.</p>
+        <p className="mt-4 font-display text-2xl font-semibold">Message envoyé.</p>
         <p className="mt-2 text-muted-strong">Merci, le club vous répondra par email.</p>
       </div>
     );
@@ -42,7 +42,7 @@ export function ContactForm() {
 
   const field =
     "mt-2 block w-full rounded-xs border border-ink/15 bg-white px-4 py-3 text-base transition-colors focus:border-ink focus:outline-none";
-  const label = "eyebrow text-[0.65rem] text-muted-strong";
+  const label = "eyebrow text-[12px] text-muted-strong";
 
   return (
     <form onSubmit={onSubmit} className="grid gap-6" noValidate={false}>
@@ -101,7 +101,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={state.status === "sending"}
-        className="group inline-flex h-14 items-center justify-center gap-2 rounded-xs bg-ink px-7 font-display text-sm font-medium uppercase tracking-[0.08em] text-white transition-colors hover:bg-graphite disabled:opacity-60 sm:justify-self-start"
+        className="group inline-flex h-14 items-center justify-center gap-2 rounded-xs bg-ink px-7 font-display text-sm font-medium text-white transition-colors hover:bg-graphite disabled:opacity-60 sm:justify-self-start"
       >
         {state.status === "sending" ? "Envoi…" : "Envoyer"}
         <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />

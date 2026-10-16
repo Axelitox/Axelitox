@@ -47,18 +47,23 @@ export default async function ActivityPage({ params }: Params) {
           { label: "Activités", href: "/activites" },
           { label: a.name, href: `/activites/${a.slug}` },
         ]}
+        links={[
+          { label: "Description", href: "#description" },
+          { label: "Horaires", href: "#horaires" },
+          { label: "Toutes les activités", href: "/activites" },
+        ]}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button href="/inscriptions" size="lg">
             S&apos;inscrire
           </Button>
-          <Button href="#horaires" variant="outline-light" size="lg" icon="right">
+          <Button href="#horaires" variant="outline-dark" size="lg" icon="right">
             Voir les horaires
           </Button>
         </div>
       </PageHero>
 
-      <section data-header="light" className="bg-paper py-20 md:py-32">
+      <section id="description" data-header="light" className="bg-paper py-20 md:py-32">
         <div className="container-x grid gap-12 md:grid-cols-12">
           <Reveal className="md:col-span-6">
             <Photo
@@ -80,11 +85,11 @@ export default async function ActivityPage({ params }: Params) {
 
             <dl className="mt-12 divide-y divide-ink/10 border-y border-ink/10">
               <div className="grid grid-cols-[120px_1fr] gap-4 py-5">
-                <dt className="eyebrow text-[0.65rem] text-muted-strong">Public</dt>
+                <dt className="eyebrow text-[12px] text-muted-strong">Public</dt>
                 <dd className="font-medium">{a.audience}</dd>
               </div>
               <div className="grid grid-cols-[120px_1fr] gap-4 py-5">
-                <dt className="eyebrow text-[0.65rem] text-muted-strong">Prérequis</dt>
+                <dt className="eyebrow text-[12px] text-muted-strong">Prérequis</dt>
                 <dd>
                   <ul className="space-y-2">
                     {a.prerequisites.map((p) => (
@@ -96,7 +101,7 @@ export default async function ActivityPage({ params }: Params) {
                 </dd>
               </div>
               <div className="grid grid-cols-[120px_1fr] gap-4 py-5">
-                <dt className="eyebrow text-[0.65rem] text-muted-strong">En bref</dt>
+                <dt className="eyebrow text-[12px] text-muted-strong">En bref</dt>
                 <dd className="flex flex-wrap gap-2">
                   {a.highlights.map((h) => (
                     <span key={h} className="rounded-xs border border-ink/15 bg-white px-2.5 py-1 text-sm">
@@ -117,7 +122,7 @@ export default async function ActivityPage({ params }: Params) {
                       <p className="mt-1 text-sm text-muted-strong">{p.detail}</p>
                       <StatusBadge status={p.status} className="mt-2" />
                     </div>
-                    <p className="shrink-0 font-display text-2xl font-bold tabular-nums">
+                    <p className="shrink-0 font-display text-2xl font-semibold tabular-nums">
                       {formatPrice(p.amount)}
                       {p.amount !== null && <span className="ml-1 text-sm font-normal text-muted-strong">/ {p.unit}</span>}
                     </p>
